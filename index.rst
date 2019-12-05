@@ -7,34 +7,6 @@
   Do not put the title, authors or other metadata in this document;
   those are automatically added.
 
-  Use the following syntax for sections:
-
-  Sections
-  ========
-
-  and
-
-  Subsections
-  -----------
-
-  and
-
-  Subsubsections
-  ^^^^^^^^^^^^^^
-
-  To add images, add the image file (png, svg or jpeg preferred) to the
-  _static/ directory. The reST syntax for adding the image is
-
-  .. figure:: /_static/filename.ext
-     :name: fig-label
-
-     Caption text.
-
-   Run: ``make html`` and ``open _build/html/index.html`` to preview your work.
-   See the README at https://github.com/lsst-sqre/lsst-technote-bootstrap or
-   this repo's README for more info.
-
-   Feel free to delete this instructional comment.
 
 :tocdepth: 1
 
@@ -45,46 +17,45 @@
 .. Add content here.
 .. Do not include the document title (it's automatically added from metadata.yaml).
 
+This document is the high-level user manual and description of the LATISS Instrument. As details are filled out, it is expected that the document may split into a LATISS operations manual and a separate technical manual.
 
-The LSST Auxiliary Telescope
-============================
+The LSST Auxiliary Telescope and LATISS
+========================================
 
-(AuxTel) is a 1.2m telescope responsible for providing atmospheric
-calibration data for the main LSST telescope. The purpose of this
-handbook is to act as a reference guide to an operator who has some
-knowledge of LSST systems, but may not be an expert in operating the
-AuxTel or it’s instrument.
-Table :numref:`tab:auxtel_chars` gives a brief overview
-of the optical characteristics of the telescope.
+The Auxiliary Telescope (AuxTel) is a 1.2m telescope with LATISS is responsible for providing atmospheric calibration data for the main LSST telescope. The purpose of this handbook is to act as a reference guide to an operator and /or technician who has some knowledge of LSST systems, but may not be an expert in operating the AuxTel or LATISS.
+
+Table :numref:`tab:auxtel_chars` gives a brief overview of the optical characteristics of the telescope and instrument
 
 .. _tab:auxtel_chars:
 
-.. table:: General AuxTel Characteristics
+.. table:: General AuxTel+LATISS Characteristics
 
-   ============ ========
-   Diameter     1.2 m
-   Focal Length 21.6 m
-   f/#          18
-   Plate Scale  0.1"/pix
-   Pixel Size   10x10 um
-   CCD Size     4K x 4K
-   ============ ========
+   =================   =============
+   Mirror Diameter      1.2 m
+   Focal Length         21.6 m
+   f/#                  18
+   Plate Scale          0.1"/pix
+   Pixel Size           10x10 um
+   CCD Size             4K x 4K
+   No. of Filters       3+1 Blank
+   No. of Dispersers    3+1 Blank
+   =================   =============
 
+
+Two instruments are generally mounted on the AuxTel. Nasmyth port 1 contains a high-speed CMOS camera used for alignment testing. Nasmyth port 2 contains LATISS. Although this is the standard configuration, the instruments can be mounted on either port.
+
+.. _LATISS top-level Docushare link: https://docushare.lsst.org/docushare/dsweb/View/Collection-4680
 
 
 There are a large number of subsystems present within the framework of AuxTel, which
-can be confusing. We detail below a few useful acronyms and the
-subsystems to which they relate.
+can be confusing. We detail below a few useful acronyms and the subsystems to which they relate.
 
---------------
+The most important concept to understand is that the LATISS instrument is composed of two components, the top-level documentation for each is found at the `LATISS top-level Docushare link`_:
 
-The Auxiliary Telescope Spectrograph (ATS) is the only instrument currently mounted on the AuxTel. In general, we
-endeavor to use the acronym ATS only when referring to the part of the
-instrument that contains the disperser and filter wheels. Occasionally,
-we use the acronym can refer to the instrument as a whole. The ATS was
-constructed by Astronomical Consultant E? TODO! Fix meee.
+#. AuxTel Spectrograph instrument(often referred to as the ATS). This consists primarily of the filter and disperser wheels, and was built by Astronomical Consulting and Equipment (ACE).
+#. Auxiliary Telescope Spectrograph Sensor and Readout System (ATSSRS), which refers to the cryogenic dewar and electronics that house and readout the CCD imager. The ATSSRS can be identified as the bronze colored dewar attached to the black housing of the ATS. It was built by Harvard University.
 
-The Auxiliary Telescope Spectrograph Sensor and Readout System (ATSSRS)refers to the cryogenic dewar and electronics that house and readout the CCD imager. The ATSSRS can be identified as the bronze colored dewar attached to the black housing of the ATS.
+
 
 TODO! Need to probably define CCS/OCS/TCS/SAL/DAQ/DM
 
@@ -111,11 +82,10 @@ System Overview
 ATSSRS Electronics Overview
 ---------------------------
 
-The ATSSRS consists of a single LSST ITL Type A chip (Number
-068?), which is read out by a standard LSST Wavefront Raft Electronics
+The ATSSRS consists of a single LSST ITL Type A chip (Serial Number
+068), which is read out by a standard LSST Wavefront Raft Electronics
 Board (WREB). The signal is digitized by a standard LSST Optical
-Transition Module (OTM) and sent via an MTP data fiber to the summit
-computing facility. The ATSSRS electronics are controlled by a Hardware
+Transition Module (OTM) and sent via an MTP data fiber to the the DAQ located in the summit server room. The ATSSRS electronics are controlled by a Hardware
 Control Unit (HCU).
 
 Some unique aspects of the ATSSRS compared to a standard LSST readout chain include:
@@ -208,7 +178,7 @@ applied. The circuit has been tested in the laboratory (without the CCD
 attached) and successfully clamps the output voltage to the CCD at
 approximately -68V. This is intended as a hardware risk mitigation
 system, and should *not* be used during normal operations. There is
-nominally a software limit that prevents more than XXXV from being
+nominally a software limit that prevents damaging voltages from being
 requested.
 
 .. figure:: /_static/CCD_BSS_-70V_clamp.PNG
@@ -836,7 +806,7 @@ avoid dust contamination in the dewar.
       in destruction of the pump.
 
    #. Slowly open relief valve on turbopump (small black knob on rear of
-      turbo housing) until pressure hits ambient ( 750 Torr in Tucson,
+      turbo housing) until pressure hits ambient (~750 Torr in Tucson,
       will be less on the mountain).
 
    #. Follow best practices for vacuum equipment (i.e., try not to let
