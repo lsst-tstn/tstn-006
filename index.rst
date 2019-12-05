@@ -59,6 +59,11 @@ The most important concept to understand is that the LATISS instrument is compos
 
 TODO! Need to probably define CCS/OCS/TCS/SAL/DAQ/DM
 
+Auxiliary Telescope Spectrograph Overview
+=========================================
+
+See the `Document-30997 <https://docushare.lsst.org/docushare/dsweb/Get/Document-30997/LSST%20AT%20Spectrograph%20AS_BUILT%20Documentation%20(1).docx>`_ for a description of the Spectrograph Instrument. 
+
 .. _ch:atssrs_chars:
 
 Auxiliary Telescope Spectrograph Sensor and Readout System Overveiw
@@ -135,9 +140,9 @@ of the ATSSRS power supplies.
    |                           HMP 2030 Unit 1                              |
    |                           (Spare - Unit 5)                             |
    +----------------------+--------------------------+----------------------+
-   |Channel 1             | DPHI                     | idk                  |
+   |Channel 1             | DPHI                     |                      |
    +----------------------+--------------------------+----------------------+
-   |Channel 2             | V\ :math:`_\mathrm{OD}`  | idk                  |
+   |Channel 2             | V\ :math:`_\mathrm{OD}`  |                      |
    +----------------------+--------------------------+----------------------+
    |Channel 3             | V\ :math:`_\mathrm{DREB}`| Digital WREB power   |
    +----------------------+--------------------------+----------------------+
@@ -157,7 +162,7 @@ of the ATSSRS power supplies.
    +----------------------+--------------------------+----------------------+
    |Channel 3             |                          | Spare                |
    +----------------------+--------------------------+----------------------+
-   |Voltage Source Output |  BSS                     |  Back bias           |
+   |Voltage Source Output |  BSS                     | Back bias            |
    +----------------------+--------------------------+----------------------+
 
 
@@ -190,7 +195,7 @@ requested.
 HMP 2030 PSUs
 ~~~~~~~~~~~~~
 
-are intended to be run under CCS control, and in general should not
+The HMP 2030 PSUs are intended to be run under CCS control, and in general should not
 require manual intervention. The power supplies can be turned on and
 enabled remotely by CCS. When the power supply is turned on, the screen
 activates and the “Power” button becomes lit. The channel buttons in the
@@ -220,7 +225,7 @@ TODO! ADD CABLING DIAGRAM
 Keithley 6487 Picoammeter/Voltage Source
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-supplies the back bias voltage to the WREB, which in turn feeds the
+The Keithley 6487 supplies the back bias voltage to the WREB, which in turn feeds the
 voltage to the CCD. No manual control of the Keithley should be
 necessary – all communication should be done via CCS, so that operating
 limits are not exceeded. The ATSSRS CCD is intended to operate at a back
@@ -237,7 +242,7 @@ wrong.
 Power Supply Cabling
 ~~~~~~~~~~~~~~~~~~~~
 
-ATSSRS power supplies is provided, for the most part, by a large white
+Cabling for the ATSSRS power supplies is provided, for the most part, by a large white
 cable procured from SLAC. This cable is in 3 pieces: the first
 (LCA-16569-A) connects the rack equipment to a bulkhead MS connector
 (labeled ), the second (no LCA) is a 75’ straight through cable that
@@ -257,7 +262,7 @@ may be useful for separating the disconnects.
 ATSSRS Cryogenics Overview
 --------------------------
 
-consists of a Polycold compressor with 75’ gas lines (0.5" DIA braided
+The ATSSRS cryogenic system consists of a Polycold compressor with 75’ gas lines (0.5" DIA braided
 steel exterior) feeding a Polycold cold head. There are separate
 (labeled) supply and return lines that must be correctly connected to
 the cold head and compressor. The Polycold system uses the PT-30
@@ -299,7 +304,7 @@ in manual mode, and delivers a fixed amount of power.
 
 .. [2] The Polycold line of products was bought out by Edwards Vacuum between the purchase of the equipment and the writing of this handbook.  Part numbers for Polycold equipment refer to the numbers on the original purchase order from Brooks.
 
-temperature for the ATS CCD is -94C/179K (Cryocon channel A). At the lab
+A typical operating temperature for the ATS CCD is -94C/179K (Cryocon channel A). At the lab
 in Tucson, when the CCD is at 179K, the Cold Plate temperature (Cryocon
 channel C) is roughly 158K while the Cold Head (Cryocon channel B) sits
 around 126K. **A key concept to keep in mind is that the CCD should
@@ -308,12 +313,12 @@ preferentially condenses on the cold surfaces, and condensation on the
 CCD surface can damage the device. The highest chance of this condition
 accidentally occurring is during warm-up, since the CCD Stage has the
 smallest thermal connection to the environment. For more details, see
-the warm-up procedure (Sec. `8.2 <#sec:warm-up>`__).
+the warm-up procedure (:ref:`sec:warm-up`).
 
 Polycold System
 ^^^^^^^^^^^^^^^
 
-cools the dewar by means of Joule-Thompson expansion. The system
+The Polycold system cools the dewar by means of Joule-Thompson expansion. The system
 contains a charge of refrigerant (PT-30) at high pressure TODO! LOOK UP
 PRESSURE, which can be discharged to the atmosphere during connection
 and disconnection, if one is not careful. The Polycold compressor should
@@ -326,7 +331,7 @@ Torr.
 Cryocon 24C
 ^^^^^^^^^^^
 
-CCS does not control dewar temperatures – it only monitors the output of
+As mentioned previously, CCS does not control dewar temperatures – it only monitors the output of
 the Cryocon. Therefore, any changes to the set points must be done
 manually on the Cryocon. Refer to the Procedures section for
 instructions. One thing to note is that the Cryocon should never be
@@ -342,7 +347,7 @@ above the button.
 Cryogenic Cabling
 ^^^^^^^^^^^^^^^^^
 
-cryogenic control is provided by a pair of two piece cables. There are
+Cabling for the dewar cryogenic control is provided by a pair of two piece cables. There are
 two bulkhead mount connectors labeled and that connect to the Cryocon.
 Each of these connects to a 75 foot cable that attaches to the dewar side
 flange and back flange, respectively. The connectors are different sizes
@@ -355,7 +360,7 @@ RTD as well as the current for the CCD Stage heater.
 ATSSRS Vacuum Overview
 ----------------------
 
-vacuum condition during normal operations is maintained by a 2 l/s ion
+The ATSSRS vacuum condition during normal operations is maintained by a 2 Litre/second ion
 pump attached to the back flange and an activated charcoal getter
 attached to the Cryo Head. As the dewar is aluminum, all vacuum
 connections are sealed with O-rings, the only exception being that the
@@ -401,7 +406,7 @@ dewar vacuum valve via a KF40 braided steel hose.
 Ion Pump
 ^^^^^^^^
 
-is a device that pulls particles out of the air by applying a large
+The Ion Pump is a device that pulls particles out of the air by applying a large
 voltage across two plates, causing a field gradient large enough to
 ionize gas particles which are then pulled to the plates and captured.
 The voltage required to achieve this is a few kV, so care should be
@@ -434,7 +439,7 @@ a relatively large minimum bend radius (60 mm).
 Turbo Station
 ^^^^^^^^^^^^^
 
-is a combination of a turbo pump backed by a roughing pump. The turbo
+The turbo station is a combination of a turbo pump backed by a roughing pump. The turbo
 pump is used to evacuate the dewar after maintenance, prior to enabling
 the Polycold system or the ion pump. The turbo pump connections are
 KF40, which allows the braided steel vacuum hose to be connected
@@ -454,7 +459,7 @@ pump-down procedure.
 Vacuum Gauge and Controller
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-is a full-range vacuum gauge, operating from approximately
+The vacuum gauge is a full-range vacuum gauge, operating from approximately
 :math:`7.5\times10^{-10}` Torr to 750 Torr. After connecting the gauge
 to the controller, the controller may display either a or message. To
 enable the gauge, hold down the up arrow on the controller for a few
@@ -463,11 +468,6 @@ a minute or two. This is likely due to outgassing of particles from the
 gauge filament. If the erratic readings continue for more than a couple
 of minutes, turn off the system and consult an expert.
 
-Auxiliary Telescope Spectrograph Overview
-=========================================
-
-Sadly, I’m not sure I know enough about the spectrograph itself to be of
-much use here
 
 Cryogenic Control
 =================
@@ -660,7 +660,8 @@ Pump-down/Cool-down
 
 Take system from atmosphere + room temp to operating vacuum + cryo level
 
-.. _sec:warm-up:
+
+.. _sec:warm-up:  
 
 Warming the Dewar
 -----------------
