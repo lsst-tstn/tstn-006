@@ -20,7 +20,7 @@
 This document is the high-level user manual and description of the LATISS Instrument. As details are filled out, it is expected that the document may split into a LATISS operations manual and a separate technical manual.
 
 The LSST Auxiliary Telescope and LATISS
-========================================
+=======================================
 
 The Auxiliary Telescope (AuxTel) is a 1.2m telescope with LATISS is responsible for providing atmospheric calibration data for the main LSST telescope. The purpose of this handbook is to act as a reference guide to an operator and /or technician who has some knowledge of LSST systems, but may not be an expert in operating the AuxTel or LATISS.
 
@@ -66,7 +66,7 @@ See the `Document-30997 <https://docushare.lsst.org/docushare/dsweb/Get/Document
 
 .. _ch:atssrs_chars:
 
-Auxiliary Telescope Spectrograph Sensor and Readout System Overveiw
+Auxiliary Telescope Spectrograph Sensor and Readout System Overview
 ===================================================================
 
 System Overview
@@ -473,7 +473,7 @@ Cryogenic Control
 =================
 
 Setting Up the Cryocon 24C
----------------------------
+--------------------------
 
 This procedure details how to set up the temperature controller the ATS,
 and how to place the system under PID control. Note: Page numbers
@@ -511,7 +511,7 @@ on the CCD Stage (Channel A) and one is mounted on the Cold Plate
 (Channel C). All temperature sensors are 100\ :math:`\Omega` Pt RTDs.
 
 Channel Configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
 
 Channels can be configured by pressing the button for the appropriate
 channel (ChA, ChB, ChC). The channel labels are above the buttons. The
@@ -526,7 +526,7 @@ Figure :numref:`fig:Cryocon_ChA_config`.
 
 
 Alarm Configuration
-^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 Once the configuration procedure for a loop has been commenced, both the
 high alarm and low alarm temperatures should be set. To do so:
@@ -555,7 +555,7 @@ high alarm and low alarm temperatures should be set. To do so:
       clearing.
 
 Configuring Loops
-^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
 
 To access the configuration menu for Loop 1, press the key (same for
 loops 2 and 3). Once in the configuration menu, you can view and change
@@ -599,7 +599,7 @@ Under normal operating conditions:
 -  Loop 2 should be left in manual mode.
 
 [Optional] Autotuning PID Loops
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Cryocon automatically tunes it the PID loop parameters for a given
 thermal system and target temperatures. This process needs to be done
