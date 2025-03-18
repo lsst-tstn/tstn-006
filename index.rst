@@ -1,3 +1,11 @@
+####################################################################################
+LSST Atmospheric Transmission and Slitless Spectrograph (LATISS) Instrument Handbook
+####################################################################################
+
+.. abstract::
+
+   This is the handbook for the LATISS Instrument.
+
 ..
   Technote content.
 
@@ -8,11 +16,8 @@
   those are automatically added.
 
 
-:tocdepth: 1
 
-.. Please do not modify tocdepth; will be fixed when a new Sphinx theme is shipped.
 
-.. sectnum::
 
 .. Add content here.
 .. Do not include the document title (it's automatically added from metadata.yaml).
@@ -42,7 +47,7 @@ Table :numref:`tab:auxtel_chars` gives a brief overview of the optical character
    =================   =============
 
 
-Two instruments are generally mounted on the AuxTel. Nasmyth port 1 contains a high-speed CMOS camera used for alignment testing. Nasmyth port 2 contains LATISS. Although this is the standard configuration, the instruments can be mounted on either port.
+Two instruments are generally mounted on the AuxTel. Nasmyth port 1 currently has an eyepiece holder for visual observations, but can also have a CMOS camera installed. Nasmyth port 2 contains LATISS. Although this is the standard configuration, the instruments can be mounted on either port.
 
 .. _LATISS top-level Docushare link: https://docushare.lsst.org/docushare/dsweb/View/Collection-4680
 
@@ -55,9 +60,6 @@ The most important concept to understand is that the LATISS instrument is compos
 #. AuxTel Spectrograph instrument(often referred to as the ATS). This consists primarily of the filter and disperser wheels, and was built by Astronomical Consulting and Equipment (ACE).
 #. Auxiliary Telescope Spectrograph Sensor and Readout System (ATSSRS), which refers to the cryogenic dewar and electronics that house and readout the CCD imager. The ATSSRS can be identified as the bronze colored dewar attached to the black housing of the ATS. It was built by Harvard University.
 
-
-
-TODO! Need to probably define CCS/OCS/TCS/SAL/DAQ/DM
 
 Auxiliary Telescope Spectrograph Overview
 =========================================
@@ -75,7 +77,7 @@ System Overview
   .. figure:: /_static/ATS_Block_Diagram.jpg
      :name: ATSSRS_Block_diagram
 
-     Caption text.
+     ATS block diagram.
 
   .. figure:: /_static/ATSSRS_internals.jpg
      :name: ATSSRS_internals
@@ -259,6 +261,23 @@ mounted on the top of the WREB enclosure lid. This final section has
 disconnects installed, so that the enclosure lid may be removed. Pliers
 may be useful for separating the disconnects.
 
+These connections can be seen in Figures 4 and 5.  You can see that the WREB
+power cable was originally intended to pass through the port labeled "Bulkhead Feedthru"
+in Figure 5.  However, when mounted there it interferes with the cable wrap, so the
+cruder connection using Zip-ties was used.
+
+.. figure:: /_static/Electronics_Cabinet_Bulkhead.jpg
+   :name: fig:Electronics_Cabinet_Bulkhead
+
+   Electronics cabinet bulkhead.
+      
+.. figure:: /_static/Dewar_Connections.jpg
+   :name: fig:Dewar_Connections
+
+   Dewar connections.
+
+
+
 ATSSRS Cryogenics Overview
 --------------------------
 
@@ -269,22 +288,25 @@ the cold head and compressor. The Polycold system uses the PT-30
 refrigerant mixture. The Polycold compressor is a simple on-off device,
 and provides essentially no method for regulating temperature of the
 system. Before the Polycold can be turned on, the dewar pressure should
-be below approximately 10\ :math:`^{-4}` Torr. Too much atmosphere in
+be below approximately 10\ :math:`^{-5}` Torr. Too much atmosphere in
 the dewar results in a large thermal load on the Polycold head, which
 can cause venting of the refrigerant. The ATSSRS CCD temperature is
 controlled by a Cryocon 24C temperature controller, by means of two
 50\ :math:`\Omega` resistive heaters placed on the CCD Stage and the
-Cold Plate (see section XXX for an overview of dewar nomenclature).
+Cold Plate (see Figure 2 for an overview of dewar nomenclature).
 
 The Cryocon monitors the temperature of the system through 3 Lakeshore
 platinum 100\ :math:`\Omega` 4-wire RTDs affixed to the CCD Stage, Cold
-Plate, and Cold Head. As of Sep. 2019, all temperature regulation
+Plate, and Cold Head. As of this writing, all temperature regulation
 parameters must be set manually on the Cryocon. CCS monitors
 temperatures reported by the Cryocon, but does not otherwise control the
-instrument. The Cryocon maintains the CCD temperature set point by
-adjusting power to the heater on the CCD Stage (Cryocon loop 1) via a
-PID control loop. The heater on the Cold Plate (Cryocon loop 2) remains
-in manual mode, and delivers a fixed amount of power.
+instrument. While the parameters cannot be controlled remotely, the
+"Control" button on the CryoCon can be toggled using CCS, allowing
+one to enter and exit control remotely.  The Cryocon maintains the CCD
+temperature set point by adjusting power to the heater on the CCD Stage
+(Cryocon loop 1) via a PID control loop. The heater on the Cold Plate
+(Cryocon loop 2) is also feedback controled with a heater controlled
+using a PID loop
 
 .. _tab:auxtel_cryo:
 
@@ -304,28 +326,38 @@ in manual mode, and delivers a fixed amount of power.
 
 .. [2] The Polycold line of products was bought out by Edwards Vacuum between the purchase of the equipment and the writing of this handbook.  Part numbers for Polycold equipment refer to the numbers on the original purchase order from Brooks.
 
-A typical operating temperature for the ATS CCD is -94C/179K (Cryocon channel A). At the lab
-in Tucson, when the CCD is at 179K, the Cold Plate temperature (Cryocon
-channel C) is roughly 158K while the Cold Head (Cryocon channel B) sits
-around 126K. **A key concept to keep in mind is that the CCD should
+A typical operating temperature for the ATS CCD is -104C/169K (Cryocon channel A). 
+The Cold Plate temperature (Cryocon channel C) is controlled at -115C/158K while
+the Cold Head (Cryocon channel B) runs open loop around -150C/123K.  All of these temperatures can 
+be monitored in Chronograf in the
+"AuxTel (LATISS) Temperatures and Pressures" dashboard.
+**A key concept to keep in mind is that the CCD should
 never be the coldest surface in the dewar.** This is because water
 preferentially condenses on the cold surfaces, and condensation on the
 CCD surface can damage the device. The highest chance of this condition
 accidentally occurring is during warm-up, since the CCD Stage has the
 smallest thermal connection to the environment. For more details, see
-the warm-up procedure (:ref:`sec:warm-up`).
+the warm-up procedure and cool down procedures, https://sitcomtn-074.lsst.io/.
 
 Polycold System
 ^^^^^^^^^^^^^^^
 
 The Polycold system cools the dewar by means of Joule-Thompson expansion. The system
-contains a charge of refrigerant (PT-30) at high pressure TODO! LOOK UP
-PRESSURE, which can be discharged to the atmosphere during connection
-and disconnection, if one is not careful. The Polycold compressor should
+contains a charge of refrigerant (PT-30) at high pressure,
+which can be discharged to the atmosphere during connection
+and disconnection, if one is not careful. The system is typically charged with
+PT-30 coolant to a pressure of approximately 250 PSI (1.7 MPa).  When the system is switched
+on the high side pressure will rise to approximately 300PSI (2.1 MPa),
+and the low side pressure will fall to approximately 60 PSI (0.4 MPa).
+These pressures can both be monitored in Chronograf in the
+"AuxTel (LATISS) Temperatures and Pressures" dashboard.
+Maintenance procedures, including charging the system with coolant, are
+described in https://sitcomtn-043.lsst.io/
+The Polycold compressor should
 never be tipped or tilted onto one side, especially while operating. If
 the system is inadvertently tilted, allow it to rest on a level surface
 for a long period of time (at least a day). The Polycold system should
-not be enabled while pressure is above approximately 10\ :math:`^{-4}`
+not be enabled when the dewar pressure is above approximately 10\ :math:`^{-5}`
 Torr.
 
 Cryocon 24C
@@ -333,7 +365,8 @@ Cryocon 24C
 
 As mentioned previously, CCS does not control dewar temperatures – it only monitors the output of
 the Cryocon. Therefore, any changes to the set points must be done
-manually on the Cryocon. Refer to the Procedures section for
+manually on the Cryocon, although the various parameters can
+be monitored with CCS.  Refer to the Procedures section for
 instructions. One thing to note is that the Cryocon should never be
 turned off via unplugging or otherwise abruptly removing power. Instead,
 the button should be held down for a couple of seconds, until the
@@ -342,7 +375,8 @@ be written to non-volatile memory, and any changes made to the system
 since it was last powered on will not be saved. Note that when the
 Cryocon is powered on, it does not immediately begin controlling
 temperature – the user must press the button until a blue light appears
-above the button.
+above the button.  As stated earlier, entering and exiting control can also
+be done remotely with CCS.
 
 Cryogenic Cabling
 ^^^^^^^^^^^^^^^^^
@@ -355,7 +389,8 @@ so that they cannot be accidentally switched. The back flange cable (
 cable) carries the RTD signals for the Cold Plate and the Cryo Head, as
 well as the current for the heater on the Cold Plate, while the cable
 for the side flange ( cable) carries the RTD signal from the CCD Stage
-RTD as well as the current for the CCD Stage heater.
+RTD as well as the current for the CCD Stage heater.  These cables are shown
+in Figures 4 and 5.
 
 ATSSRS Vacuum Overview
 ----------------------
@@ -369,7 +404,7 @@ KF25 flange for attachment to the dewar. The dewar also benefits from
 cryo-pumping due to the large amount of cold metal surfaces in the
 dewar.
 
-Typical vacuum levels achieved during operation in the Tucson lab are a
+Typical vacuum levels achieved during operation are a
 few parts in 10\ :math:`^{-7}` Torr. The vacuum condition is monitored
 by a full-range gauge which operates from high-vacuum to atmosphere. The
 gauge (which is KF40) attaches to the dewar via a KF40-KF25 adapter. In
@@ -382,8 +417,9 @@ pressure 9-11 PSIG) mounted to a side flange.
 When not operating under regular conditions (such as during warm-up or
 cool-down), a Pfeiffer turbo-pumping station is available. Typical
 pressure achieved by the turbo station alone (no cryo, no ion pump) is a
-few parts in 10\ :math:`^{-5}` Torr. The turbo pump attaches to the
-dewar vacuum valve via a KF40 braided steel hose.
+few parts in 10\ :math:`^{-6}` Torr. The turbo pump attaches to the
+dewar vacuum valve via a KF40 braided steel hose.  More details
+on connecting and operating the turbo pump are in https://sitcomtn-074.lsst.io/.
 
 .. _tab:auxtel_vac_eqmt:
 
@@ -453,8 +489,9 @@ down. The nominal pump rates for the turbo and roughing pumps are 90,000
 rpm and 1500 Hz, respectively. **Once the turbo is spun up, it should
 never be opened to a system at atmospheric pressure. Doing so will
 destroy the turbo pump.** After turning off the pump, make sure to allow
-the turbo to fully spin down before venting. See section XXX for the
-pump-down procedure.
+the turbo to fully spin down before venting. More details on connecting and operating
+the turbo pump and the pump-down procedure are in https://sitcomtn-074.lsst.io/.
+
 
 Vacuum Gauge and Controller
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -493,14 +530,14 @@ three of its four channels. They are:
 -  Channel B: Cryo Head temperature.
 
 -  Channel C: Cold Plate Temperature. The heater for PID Loop 2 is
-   located on the Cold Stage. If PID control is desired on Loop 2, it
-   should reference Channel C.
+   located on the Cold Stage. We typically use PID control on Loop 2, 
+   which references Channel C.
 
 -  Channel D: No Sensor
 
-Figure :numref:`fig:Cryocon_front_panel` shows the front panel of the Cryocon when the dewar is cooled and operating properly.
+:numref:`fig:Cryocon_front_panel` shows the front panel of the Cryocon when the dewar is cooled and operating properly.
 
-.. figure:: /_static/Startpoint.jpg
+.. figure:: /_static/CryoCon_Main_Screen.jpg
    :name: fig:Cryocon_front_panel
 
    Front panel during normal operation
@@ -516,12 +553,19 @@ Channel Configuration
 Channels can be configured by pressing the button for the appropriate
 channel (ChA, ChB, ChC). The channel labels are above the buttons. The
 front panel when configuring Channel A is shown in
-Figure :numref:`fig:Cryocon_ChA_config`.
+:numref:`fig:Cryocon_ChA_config`, and for Channel C in
+:numref:`fig:Cryocon_ChC_config`.
 
-.. figure:: /_static/ChA-operating-pre-warmup.jpg
+.. figure:: /_static/Loop_1.jpg
    :name: fig:Cryocon_ChA_config
 
    Channel A configuration during normal operation
+
+
+.. figure:: /_static/Loop_2.jpg
+   :name: fig:Cryocon_ChC_config
+
+   Channel C configuration during normal operation
 
 
 
@@ -560,7 +604,7 @@ Configuring Loops
 To access the configuration menu for Loop 1, press the key (same for
 loops 2 and 3). Once in the configuration menu, you can view and change
 the parameters by moving the cursor to them and pressing the key. The
-front panel when configuring Loop 1 is shown in Figure `8.4 <#>`__.
+front panel when configuring Loop 1 is shown in :numref:`fig:Cryocon_ChA_config`.
 
 Options and their values for normal operations are given below:
 
@@ -596,87 +640,25 @@ Under normal operating conditions:
 
 -  Loop 1 should be set to PID mode with Channel A as input.
 
--  Loop 2 should be left in manual mode.
+-  Loop 2 should be set to PID mode with Channel C as input.
 
-[Optional] Autotuning PID Loops
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The Cryocon automatically tunes it the PID loop parameters for a given
-thermal system and target temperatures. This process needs to be done
-only when the system or the target temperatures are substantially
-changed. The front panel when autotuning Loop 1 is shown in
-Figure `8.4 <#>`__.
-
-The procedure for performing an autotune is as follows:
-
-#. Set Type (the loop control) back to Pman.
-
-#. Manually change heater value until CCD Stage temperature is near
-   desired temp (we found 15% on Loop 1 and 30% on Loop 2 was about
-   correct for Loop 1 to achieve a temperature around 178K in the lab)
-
-#. Press the button, and check these settings:
-
-   -  Set Autotune to desired loop (Loop 1 for CCD Stage)
-
-   -  Set Delta P to 2%
-
-   -  Set Timeout to 600s
-
-#. To begin the autotune, scroll to the Go line and press
-
-#. If the autotuning succeeds or fails, it will say so after the Go
-   autotune fails, the Delta P and timeout can be tweaked
-
-#. If the system succeeds, press on the Save & Exit line
-
-   -  When you press Save & Exit, the Cryocon will return to PID control
-      and return to the listed set point
-
-The critical items that determine success or failure of the autotuning
-process are the **Delta P** and **Timeout** values. Delta P sets the
-maximum additional heat load the PID loop is allowed to place on the
-system. To wit: a Delta P of 2% tells the system that it is allowed to
-put +/- 2% power across the heater, referenced to its current value. In
-the case detailed above, that would be roughly 13-17%. The Timeout value
-sets the length of time the system will use to learn the paramters.
-Because the ATSSRS has such a large thermal time constant, the value for
-Timeout should be high – several minutes at least.
-
-Start-up/Shut-down
-==================
-
-Running the Telescope
-=====================
-
-Taking Data
-===========
-
-Maintenance Procedures
-======================
-
-Pump-down/Cool-down
--------------------
-
-Take system from atmosphere + room temp to operating vacuum + cryo level
-
-
-.. _sec:warm-up:  
 
 Warming the Dewar
 -----------------
 
-This procedure details how to warm the ATS from operating temperature to
-ambient temperature. This process typically takes around 6 hours and
+Detailed procedures for warming and cooling the dewar are in
+https://sitcomtn-074.lsst.io/.  However, below gives some of the things to
+keep in mind when executing these procedures.
+This process typically takes around 6 hours and
 dewar temperatures should be monitored throughout the process.
 
 **IMPORTANT: The CCD temperature must always remain >3K warmer than the
 cold stage to prevent condensation onto the CCD. This is especially
 relevant as the system warms and cools.**
 
-**After weeks of being cold, the vacuum pressure is around 6-7e-7 Torr.
+**After weeks of being cold, the vacuum pressure is around 1-3e-7 Torr.
 After warming up, but still on the turbopump, it is around 3e-5 Torr.
-Can get to  6-7e-5 Torr after 20 hours of pumping, assuming it’s not
+We can get below 1e-5 Torr after 20 hours of pumping, assuming it’s not
 been offline and exposed for very long**
 
 Important Concepts
@@ -695,39 +677,6 @@ and the external environment. The Cold Plate is thermally coupled to the
 CCD Stage by means of a spring-loaded copper disk that presses against
 the back of the stage.
 
-#. The voltage sources should be turned off, following the procedure
-   outlined above.
-
-#. Reduce the heat load on Loop 2 (Channel B, Cold Stage)
-
-   -  We had Pman for Loop 2 set to 30% during manual operation. We
-      reduced it to 10%.
-
-#. Ensure the over-temperature disconnect settings are reasonable
-   (typically should be set somewhere around 20C/293K)
-
-   -  Press [System] key, go to Overtemp config, press [Enter]
-
-   -  Set OTD Enable to On
-
-   -  Set OTD Source to ChA
-
-   -  Set OTD setpoint to 293
-
-#. Change Loop 1 (Channel A, CCD Stage Heater) Type to Pman (use +/-
-   button)
-
-#. Decrease Loop 1 heater power
-
-   -  We changed from 15% to 12%.
-
-#. Pause, to make sure the system is somewhat stable and that system
-   seems safe. It may be slowely cooling.
-
-#. Turn off the Polycold using the rocker switch on the compressor.
-
-   System will now heat up. Monitor temperatures to make sure Channel A
-   is always >3K warmer than other channels.
 
    Note: Once Polycold is turned off, the dewar interior will begin to
    thermalize. This may cause the CCD Stage (Channel A) to initially
@@ -743,86 +692,8 @@ the back of the stage.
    Note: If the system is heating up too quickly, the power on the
    heaters should be decreased.
 
-   Note: Pressure in the dewar will begin to slowly increase as
+   Note: Pressure in the dewar will increase as
    cryopumping ceases.
-
-#. Connect and turn on the turbo pump and evacuate the pump line
-
-   -  Pressure in dewar is a few 10-̂5 torr and/or when the ion pump
-      starts seeing an increased pump current
-
-   -  Pressure in pump line should be a few 10-̂6 tour before continuing
-
-#. Open the valve slowly and then turn off the ion pump
-
-   Several hours into warmup on 2019/09/11, the pressure in the dewar
-   started to rise, reaching 1E-2 torr. This is due to the charcoal
-   getter releasing water as it heats up. After some time (an hour or
-   two), the pressure dropped rapidly to a few 1E-5. When the system
-   passes the over-temperature setpoint (293K if following the
-   instructions above), the heaters will be disconnected and the
-   overtemp flag will be set. This can be manually reset by pressing the
-   [Control] button, which re-enables the heaters (assuming the system
-   is below the over-temperature disconnect setpoint. The system will
-   thermalize with ambient.
-
-Venting the Dewar
------------------
-
-The process to take the dewar from warm, moderate vacuum (turbo pump
-only), to atmospheric pressure. Should only be done in a clean area to
-avoid dust contamination in the dewar.
-
-#. Warm the system, as described above.
-
-#. Power off all electronics
-
-#. Put on a grounding strap and ground yourself.
-
-#. Unplug ion pump from power supply.
-
-#. Unplug the fans.
-
-#. Disconnect temperature monitoring and control wires (one on side
-   flange, one on back plate).
-
-#. Disconnect Polycold gas lines
-
-   -  **Be careful not to torque the Cold Head coupling fixture (use 2
-      wrenches).**
-
-   -  **CAP THE GAS LINES AND GAS INPUTS IMMEDIATELY AFTER
-      DISCONNECTING.**
-
-#. Prepare to Disconnect dewar from turbopump
-
-   #. Close the dewar valve. The valve should be firmly shut, but do not
-      over-tighten the valve.
-
-   #. Turn off turbo power using the button on the front panel of the
-      station.
-
-   #. Wait for turbo to spin down. **Do not open the relief valve until
-      the turbo has completely spun down.** Failure to do so may result
-      in destruction of the pump.
-
-   #. Slowly open relief valve on turbopump (small black knob on rear of
-      turbo housing) until pressure hits ambient (~750 Torr in Tucson,
-      will be less on the mountain).
-
-   #. Follow best practices for vacuum equipment (i.e., try not to let
-      dust/oil/grease/etc. enter the pump hose, use nitrile gloves to
-      handle o-rings and vacuum surfaces).
-
-   #. Detach and seal both the dewar valve and pump hose with a KF40
-      blank flange. This is especially important to avoid dust
-      contamination of both the dewar and turbo pump.
-
-Opening the Dewar
------------------
-
-Only under extreme circumstances
-
 
 
 .. .. rubric:: References
